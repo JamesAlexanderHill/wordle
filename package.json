@@ -9,8 +9,8 @@
   "scripts": {
     "dev": "run-p dev:*",
     "dev:server": "nodemon server/index.js",
-    "dev:client": "yarn --cwd client run start",
-    "dev:storybook": "yarn --cwd client run storybook"
+    "dev:client": "yarn --cwd app run start",
+    "dev:storybook": "yarn --cwd app run storybook"
   },
   "devDependencies": {
     "nodemon": "^2.0.15",
