@@ -1,0 +1,19 @@
+{
+  "name": "wordle",
+  "version": "1.0.0",
+  "description": "A 5 letter word game",
+  "main": "index.js",
+  "repository": "git@github.com:JamesAlexanderHill/wordle.git",
+  "author": "James Hill <info@jamesalexanderhill.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "run-p dev:*",
+    "dev:server": "nodemon server/index.js",
+    "dev:client": "yarn --cwd client run start",
+    "dev:storybook": "yarn --cwd client run storybook"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "npm-run-all": "^4.1.5"
+  }
+}
