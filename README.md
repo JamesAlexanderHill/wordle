@@ -52,43 +52,84 @@
     ],
 }
 ```
-### Statistics & History ###
+### WOTD, Statistics & History ###
 * Statistics will be split between Freemode and Word-of-the-Day as well as the mode the game was played in
 * history will just be an array of past words of the day
 
 ```
 {
-    history: ["tepal", "tiger", ...]
-    words: [
-        {
-            word: "tepal",
+    wotd: {
+        current: {
+            startTime: 123456789876,
+            word: "white",
             statistics: {
-                wotd: {
-                    easy: [
-                        {user: 1234-abcd-uuid, guesses: 6},
-                        {user: 5678-efgh-uuid, guesses: 2},
-                        {user: 9101-ijkl-uuid, guesses: 12},
-                    ],
-                    hard: [
-                        {user: 1234-abcd-uuid, guesses: 3},
-                        {user: 5678-efgh-uuid, guesses: 4},
-                        {user: 9101-ijkl-uuid, guesses: 5},
-                    ],
-                },
-                free: {
-                    easy: [
-                        {user: 1234-abcd-uuid, guesses: 6},
-                        {user: 5678-efgh-uuid, guesses: 2},
-                        {user: 9101-ijkl-uuid, guesses: 12},
-                    ],
-                    hard: [
-                        {user: 1234-abcd-uuid, guesses: 3},
-                        {user: 5678-efgh-uuid, guesses: 4},
-                        {user: 9101-ijkl-uuid, guesses: 5},
-                    ]
-                },
+                easy: [
+                    {user: 1234-abcd-uuid, guesses: 6},
+                    {user: 5678-efgh-uuid, guesses: 2},
+                    {user: 9101-ijkl-uuid, guesses: 12},
+                ],
+                hard: [
+                    {user: 1234-abcd-uuid, guesses: 3},
+                    {user: 5678-efgh-uuid, guesses: 4},
+                    {user: 9101-ijkl-uuid, guesses: 5},
+                ],
             }
-        }
-    ]
+        },
+        history: [
+            {
+                startTime: 123456789876,
+                word: "tepal",
+                statistics: {
+                    easy: [
+                        {user: 1234-abcd-uuid, guesses: 6},
+                        {user: 5678-efgh-uuid, guesses: 2},
+                        {user: 9101-ijkl-uuid, guesses: 12},
+                    ],
+                    hard: [
+                        {user: 1234-abcd-uuid, guesses: 3},
+                        {user: 5678-efgh-uuid, guesses: 4},
+                        {user: 9101-ijkl-uuid, guesses: 5},
+                    ],
+                }
+            },
+            {
+                startTime: 1231242345346,
+                word: "tiger",
+                statistics: {
+                    easy: [
+                        {user: 1234-abcd-uuid, guesses: 6},
+                        {user: 1234-abcd-uuid, guesses: 6},
+                    ],
+                    hard: [
+                        {user: 9101-ijkl-uuid, guesses: 5},
+                        {user: 1234-abcd-uuid, guesses: 6},
+                    ],
+                }
+            },
+        ],
+    },
+    freemode: {
+        "tepal": {
+            easy: [
+                {user: 1234-abcd-uuid, guesses: 6},
+                {user: 1234-abcd-uuid, guesses: 6},
+            ],
+            hard: [
+                {user: 9101-ijkl-uuid, guesses: 5},
+                {user: 1234-abcd-uuid, guesses: 6},
+            ],
+        },
+        "white": {
+            easy: [
+                {user: 1234-abcd-uuid, guesses: 6},
+                {user: 1234-abcd-uuid, guesses: 6},
+            ],
+            hard: [
+                {user: 9101-ijkl-uuid, guesses: 5},
+                {user: 1234-abcd-uuid, guesses: 6},
+            ],
+        },
+    },
+    words: ["tepal", "tiger", "white", "green"],
 }
 ```
