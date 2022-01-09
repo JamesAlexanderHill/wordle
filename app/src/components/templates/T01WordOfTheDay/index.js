@@ -1,8 +1,11 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-    display: grid;
-    grid-template-rows: auto minmax(300px, 25%)
+`;
+const Bottom = styled.div`
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
 `;
 
 const T01WordOfTheDay = ({inputs, keyboard}) => {
@@ -10,9 +13,11 @@ const T01WordOfTheDay = ({inputs, keyboard}) => {
     return (
         <Wrapper>
             {inputs}
-            {keyboard}
+            <Bottom>
+                {keyboard}
+            </Bottom>
         </Wrapper>
     );
-}
+};
 
 export default T01WordOfTheDay;

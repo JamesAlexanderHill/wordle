@@ -2,10 +2,21 @@ import { Routes, Route, Outlet, Link, useMatch, useResolvedPath } from "react-ro
 import styled, { css } from 'styled-components';
 
 import T01WordOfTheDay from "./components/templates/T01WordOfTheDay";
+import M01Keyboard from './components/molecules/M01Keyboard';
 
 import { palette } from './util/constants';
 
 const { green, blue, bone, transparent } = palette;
+
+const Content = styled.div`
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    > main {
+        flex: 1;
+    }
+`;
 const Header = styled.header`
     display: grid;
     text-align: center;
@@ -27,7 +38,6 @@ const Header = styled.header`
         }
     }
 `;
-
 const StyledLink = styled(({ isActive, ...props }) => <Link {...props} />)`
     color: ${bone};
     margin: 0px 5px;
@@ -61,7 +71,7 @@ const CustomLink = ({ children, to, ...props }) => {
 };
 
 const Layout = () => (
-  <div>
+  <Content>
     <Header>
       <h1>Wordle</h1>
       <nav>
@@ -84,9 +94,9 @@ const Layout = () => (
     <main>
         <Outlet />
     </main>
-  </div>
+  </Content>
 );
-const P01WordOfTheDay = /* <T01WordOfTheDay  /> */ () => <div>Word of the Day</div>;
+const P01WordOfTheDay = () => <T01WordOfTheDay inputs={<div>Inputs</div>} keyboard={<M01Keyboard />} />;
 const P02Instructions = /* <T02Instructions  /> */ () => <div>Instructions</div>;
 const P03Freemode = /* <T03Freemode /> */ () => <div>Freemode</div>;
 const P04Statistics = /* <T04Statistics /> */ () => <div>Statistics</div>;
