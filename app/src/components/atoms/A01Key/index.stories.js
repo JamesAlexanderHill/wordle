@@ -13,5 +13,12 @@ const Template = (args) => <A01Key {...args} />;
 export const Default = Template.bind({});
 Default.args = {
     label: 'B',
+    isDisabled: false,
+    onClick: () => console.log('PRESSED', 'B'),
+};
+export const Disabled = Template.bind({});
+Disabled.args = {
+    label: 'B',
+    isDisabled: true,
     onClick: () => console.log('PRESSED', 'B'),
 };

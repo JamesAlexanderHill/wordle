@@ -11,4 +11,10 @@ export default {
 const Template = (args) => <M01Keyboard {...args} />;
   
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+    isDisabled: false,
+};
+export const Disabled = Template.bind({});
+Disabled.args = {
+    isDisabled: true,
+};

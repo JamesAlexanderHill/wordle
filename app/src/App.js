@@ -1,12 +1,11 @@
 import { Routes, Route, Outlet, Link, useMatch, useResolvedPath } from "react-router-dom";
 import styled, { css } from 'styled-components';
 
-import T01WordOfTheDay from "./components/templates/T01WordOfTheDay";
-import M01Keyboard from './components/molecules/M01Keyboard';
+import WordOfTheDay from "./wordle/word-of-the-day";
 
 import { palette } from './util/constants';
 
-const { green, blue, bone, transparent } = palette;
+const { green, bone, transparent } = palette;
 
 const Content = styled.div`
     height: 100vh;
@@ -96,7 +95,7 @@ const Layout = () => (
     </main>
   </Content>
 );
-const P01WordOfTheDay = () => <T01WordOfTheDay inputs={<div>Inputs</div>} keyboard={<M01Keyboard />} />;
+const P01WordOfTheDay = () => <WordOfTheDay />;
 const P02Instructions = /* <T02Instructions  /> */ () => <div>Instructions</div>;
 const P03Freemode = /* <T03Freemode /> */ () => <div>Freemode</div>;
 const P04Statistics = /* <T04Statistics /> */ () => <div>Statistics</div>;
