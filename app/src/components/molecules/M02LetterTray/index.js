@@ -6,7 +6,7 @@ const Form = styled.form`
 const Input = styled.input`
 `;
 
-const M01LetterTray = ({letterCount}) => {
+const M02LetterTray = ({letterCount = 5, guess = []}) => {
     const letters = times(letterCount, <Input />);
 
     return (
@@ -16,4 +16,4 @@ const M01LetterTray = ({letterCount}) => {
     );
 }
 
-export default M01LetterTray;
+export default M02LetterTray;

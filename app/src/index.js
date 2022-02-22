@@ -6,7 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 
 import { palette } from './util/constants';
 
-import App from './App';
+// import App from './App';
+import Game from './Game';
 import reportWebVitals from './reportWebVitals';
 
 const { black, bone } = palette;
@@ -26,7 +27,8 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <GlobalStyle />
-      <App />
+      {/* <App /> */}
+      <Game letterCount={5} attempts={6} />
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
