@@ -4,21 +4,17 @@ import { createGlobalStyle } from 'styled-components'
 import { normalize } from 'styled-normalize'
 import { BrowserRouter } from "react-router-dom";
 
-import { palette } from './util/constants';
-
-// import App from './App';
-import Game from './Game';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const { black, bone } = palette;
 
 const GlobalStyle = createGlobalStyle`
   ${normalize}
 
   body {
     padding: 0;
-    background-color: ${black};
-    color: ${bone};
+    background-color: #434343;
+    color: #ffffff;
     font-family: Arial, Helvetica, sans-serif;
   }
 `;
@@ -27,9 +23,8 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <GlobalStyle />
-      {/* <App /> */}
-      <Game letterCount={5} attempts={6} />
-    </BrowserRouter>
+      <App />
+]    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
