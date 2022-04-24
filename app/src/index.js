@@ -24,7 +24,7 @@ ReactDOM.render(
     <BrowserRouter>
       <GlobalStyle />
       <App />
-]    </BrowserRouter>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

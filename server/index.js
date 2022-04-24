@@ -1,6 +1,7 @@
 const path = require('path');
 const dotenv = require('dotenv');
 const express = require("express");
+const cors = require('cors');
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ const api = require('./routes/api.js');
 /**
  * Middleware
  */
+app.use(cors());
 app.use(express.static(path.resolve(__dirname, '../app/build')));
 app.use('/api', api);
 

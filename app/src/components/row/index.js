@@ -43,9 +43,9 @@ const Row = ({ isActive, round, setRound, keydownEvent$, incrementRound }) => {
       setCurrentIndex(currentIndex - 1);
       setRound(updatedRound);
     };
-    const handleEnter = () => {
+    const handleEnter = async () => {
       console.log('enter');
-      setFeedback(getFeedback(round));
+      setFeedback(await getFeedback(round));
       incrementRound();
     };
     const handleLetter = (letter) => {
@@ -61,16 +61,18 @@ const Row = ({ isActive, round, setRound, keydownEvent$, incrementRound }) => {
     const letterSubscription = letters$.subscribe((key) => handleLetter(key));
 
     const getFeedback = (guess) => {
-      const target = 'MEGAN'.split('');
-      // const feedback = Array(guess.length).fill(null);
-      return guess.map((letter, index) => {
-        if (target[index] === guess[index]) {
-          return 1;
-        } else if (target.includes(letter)) {
-          return 0;
+        const options = {
+            method: 'POST',
+            body: JSON.stringify({guess: guess.join('')}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
         }
-        return -1;
-      });
+        const feedback = fetch('http://localhost:3001/api/wotd', options)
+            .then(res => res.json())
+
+        return feedback;
     };
 
     return function cleanUp() {
