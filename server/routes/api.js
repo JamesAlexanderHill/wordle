@@ -4,6 +4,16 @@ const bodyParser = require('body-parser');
 const router = express.Router();
 const db = require('../database');
 
+const words = [
+    'MEGAN',
+    'JAMES',
+    'MITCH',
+    'BATCH',
+    'HOUSE',
+];
+
+const formatDate = (date) => date.toLocaleDateString('en-AU', {year: 'numeric', month: '2-digit', day: '2-digit'});
+
 /**
  * Middleware
  */
@@ -16,72 +26,52 @@ router.use(bodyParser.urlencoded({extended: true}));
 router.get("/", (req, res) => res.status(200).json({
     version: 'v1.0.0',
     endpoints: {
-        '/api/words:GET': {type: 'GET', response: 'The current wordlist'},
-        '/api/words:POST': {type: 'POST', 'request-body': 'A list of 5 letter words', response: 'Success or Failure'},
-        '/api/feedback:POST': {type: 'POST', 'request-body': 'A single 5 letter word', response: 'Feedback for each letter of the current guess'},
+        '/api/wotd:GET': {type: 'GET', response: 'The current wordlist'},
+        '/api/wotd:POST': {type: 'POST', 'request-body': 'A list of 5 letter words', response: 'array with feedback (-1, 0, 1) for each letter'},
+        // '/api/feedback:POST': {type: 'POST', 'request-body': 'A single 5 letter word', response: 'Feedback for each letter of the current guess'},
     },
 }));
 
 /**
  * Return the current wordlist
  */
- router.get("/words", (req, res) => {
-    db.get('words', (err, value) => {
-        const wordlist = value || [];
-        return res.status(200).json(wordlist);
-    });
-});
-
+router.get("/wotd", (req, res) => res.status(200).json(words));
 /**
- * Add an array of words to the database
+ * Returns feedback for the daily word
  */
-router.post("/words", (req, res) => {
-    const words = req.body.words;
-    if (!words) return res.status(400).json({ error: 'Wordlist not passed in request body' });
-
-    db.get('words', (err, value) => {
-        const wordlist = value || [];
-        const newWords = words.filter((word) => !wordlist.includes(word));
-        wordlist.push(...newWords);
-
-        db.put('words', wordlist, (err) => {
-            if(err) return res.status(400).json({ error: `Words couldnt be added to the database` });
-
-            return res.status(200).json(wordlist);
-        });
+const getFeedback = (guess, target) => {
+    return guess.split('').map((letter, index) => {
+        if (target[index] === guess[index]) {
+        return 1;
+        } else if (target.includes(letter)) {
+        return 0;
+        }
+        return -1;
     });
-});
+};
+router.post("/wotd", (req, res) => {
+    const guess = req.body.guess;
+    if(!guess) return res.status(400).json({ error: 'Guess not passed in request body' });
 
-/**
- * Provide feedback for a guess
- */
- router.post("/feedback", (req, res) => {
-    const game = req.body.game;
-    const isNewGame = game.history.length <= 1;
-    const currentGuess = game.history.at(-1).guess;
-    if (!game) return res.status(400).json({ error: 'Game is invalid' });
+    db.get('wordle', (err, storedList) => {
+        const today = new Date();
 
-    // check the latest guess is in the wordlist
-    db.get('words', (err, value) => {
-        const wordlist = value || [];
-        if (!wordlist.includes(currentGuess)) return res.status(400).json({ error: `Guess does not exist in current wordlist` });
-
-        
-        const feedback = guessFeedback(correctAnswer, currentGuess);
+        // dont have a storedList => select wotd, create and store wordlist and return feedback
+        // dont have a wotd => select wotd, update wordList and return feedback
+        if(!storedList || !storedList[formatDate(today)]) {
+            const rand = Math.floor(Math.random() * words.length-1);
+            const wordList = storedList || {};
+            const wotd = words[rand];
+            wordList[formatDate(today)] = wotd;
+            db.put('wordle', wordList, (err) => {
+                return res.status(200).json(getFeedback(guess, wotd)); 
+            });
+        } else {
+            // have a wotd => return feedback
+            const wotd = storedList[formatDate(today)];
+            return res.status(200).json(getFeedback(guess, wotd));
+        }
     });
-
-    // db.get('history', (err, value) => {
-    //     const history = value || [];
-    //     if (g)
-    //     const newWords = words.filter((word) => !wordlist.includes(word));
-    //     wordlist.push(...newWords);
-
-    //     db.put('words', wordlist, (err) => {
-    //         if(err) return res.status(400).json({ error: `Words couldnt be added to the database` });
-
-    //         return res.status(200).json(wordlist);
-    //     });
-    // });
 });
 
 module.exports = router;
